@@ -2,7 +2,7 @@ spring:
   application:
     name: kafka
   kafka:
-    bootstrap-servers: localhost:9092   # Kafka running in Docker
+    bootstrap-servers: localhost:9092 # Kafka running in Docker
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -12,3 +12,12 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "com.example.kafka.model"
+  datasource:
+    url: jdbc:mysql://localhost:3306/booking_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none # table already exists — don't touch it
+    show-sql: true

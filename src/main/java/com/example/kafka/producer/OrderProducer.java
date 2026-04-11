@@ -1,13 +1,14 @@
 package com.example.kafka.producer;
 
-import com.example.kafka.model.OrderEvent;
+import java.util.concurrent.CompletableFuture;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CompletableFuture;
+import com.example.kafka.model.OrderEvent;
 
 @Service
 public class OrderProducer {
@@ -17,7 +18,7 @@ public class OrderProducer {
 
     private final KafkaTemplate<String, OrderEvent> kafkaTemplate;
 
-    public OrderProducer(KafkaTemplate<String, OrderEvent> kafkaTemplate) {
+    public OrderProducer(KafkaTemplate<String, OrderEvent> kafkaTemplate) {//dipendency injection
         this.kafkaTemplate = kafkaTemplate;
     }
 
