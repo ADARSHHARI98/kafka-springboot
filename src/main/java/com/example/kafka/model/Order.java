@@ -6,10 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order implements Serializable {// Convert object → bytes → store/send → reconstruct object
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,20 +31,35 @@ public class Order {
     private String status;
 
     // No-arg constructor (required by JPA)
-    public Order() {}
+    public Order() {
+    }
 
     // Convenience constructor from OrderEvent
     public Order(OrderEvent event) {
-        this.orderId  = event.getOrderId();
-        this.product  = event.getProduct();
+        this.orderId = event.getOrderId();
+        this.product = event.getProduct();
         this.quantity = event.getQuantity();
-        this.status   = event.getStatus();
+        this.status = event.getStatus();
     }
 
     // Getters
-    public Long   getId()       { return id; }
-    public String getOrderId()  { return orderId; }
-    public String getProduct()  { return product; }
-    public int    getQuantity() { return quantity; }
-    public String getStatus()   { return status; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 }
