@@ -1,6 +1,10 @@
 spring:
   application:
     name: kafka
+  data:
+    redis:
+      host: localhost
+      port: 6379
   kafka:
     bootstrap-servers: localhost:9092 # Kafka running in Docker
     producer:
