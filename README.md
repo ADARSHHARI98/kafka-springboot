@@ -11,3 +11,6 @@ REST Client → Order Service (Producer) → Kafka Topic: orders
                                                   ├── Notification Consumer (group: notification-group)
                                                   └── Inventory Consumer    (group: inventory-group)
 Each consumer belongs to a different consumer group, so both receive every message independently.
+
+Added Mysql for saving the order details.
+Added Redis caching for order table.
