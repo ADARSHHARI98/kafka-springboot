@@ -15,18 +15,18 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.kafka.model.Order;
 import com.example.kafka.model.OrderEvent;
-import com.example.kafka.producer.OrderProducer;
+import com.example.kafka.service.OrderService;
 import com.example.kafka.repository.OrderRepository;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
 
-    private final OrderProducer orderProducer;
+    private final OrderService orderService;
     private final OrderRepository orderRepository;
 
-    public OrderController(OrderProducer orderProducer, OrderRepository orderRepository) {
-        this.orderProducer = orderProducer;
+    public OrderController(OrderService orderService, OrderRepository orderRepository) {
+        this.orderService = orderService;
         this.orderRepository = orderRepository;
     }
 
@@ -35,8 +35,7 @@ public class OrderController {
         event.setOrderId(UUID.randomUUID().toString());
         event.setStatus("PLACED");
 
-        orderRepository.save(new Order(event));
-        orderProducer.sendOrder(event);
+        orderService.createOrderAndOutboxEvent(event);
 
         return ResponseEntity.ok("Order queued: " + event.getOrderId());
     }

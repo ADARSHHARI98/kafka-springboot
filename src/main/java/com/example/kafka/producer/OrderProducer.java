@@ -22,7 +22,7 @@ public class OrderProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendOrder(OrderEvent event) {
+    public CompletableFuture<SendResult<String, OrderEvent>> sendOrder(OrderEvent event) {
         CompletableFuture<SendResult<String, OrderEvent>> future = kafkaTemplate.send(TOPIC, event.getOrderId(), event);
 
         future.whenComplete((result, ex) -> {
@@ -35,5 +35,7 @@ public class OrderProducer {
                 log.error("Failed to send order [{}] due to error: {}", event.getOrderId(), ex.getMessage(), ex);
             }
         });
+        
+        return future;
     }
 }

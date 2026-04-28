@@ -23,5 +23,5 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: none # table already exists — don't touch it
+      ddl-auto: update # changed from none to auto-create the outbox table for convenience
     show-sql: true
